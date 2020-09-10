@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
+  // Three fields 
   name: {
     type: String,
     trim: true,
@@ -18,6 +19,6 @@ const transactionSchema = new Schema({
   }
 });
 
-const Transaction = mongoose.model("Transaction", transactionSchema);
+const Transaction = mongoose.model("Transaction", transactionSchema); // "model name" and model
 
-module.exports = Transaction;
+module.exports = Transaction; // each row will have this model
