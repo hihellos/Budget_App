@@ -13,6 +13,7 @@ request.onupgradeneeded = function(event) {
 request.onsuccess = function(event) {
   db = target.result;
 
+  // check if app is online before reading from db
   if (navigator.onLine) {
     checkDatabase();
   }
@@ -38,9 +39,11 @@ function saveRecord(record) {
 function checkDatabase() {
   console.log("checkDatabase");
   // open a transaction on your pending db
-  const transaction = db.transaction(["pending"], "readwrite");
+  const transaction = db.transaction(["pending"], "readwrite"); // open with read and write permissions
   // access your pending object store
+  const store = transaction.objectStore("pending"); // use transaction var to (11:46am)
   // get all records from store and set to a variable
+  const getAll = store.getAll();
 
   getAll.onsuccess = function() {
     if (getAll.result.length > 0) {
@@ -52,11 +55,16 @@ function checkDatabase() {
           "Content-Type": "application/json"
         }
       })
-      .then(response => response.json())
+      .then(response => response.json()) // need to return response to use it in next .then
       .then(() => {
           // if successful, open a transaction on your pending db
+          const transaction = db.transaction(["pending"], "readwrite");
+
           // access your pending object store
+          const store = transaction.objectStore("pending");
+
           // clear all items in your store
+          store.clear();
       });
     }
   };
