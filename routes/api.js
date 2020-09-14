@@ -25,7 +25,7 @@ router.post("/api/transaction/bulk", ({ body }, res) => {
 
 router.get("/api/transaction", (req, res) => { // no data to abstract = req
   Transaction.find({}) // Transaction references our model
-    .sort({ date: -1 }) // most recent descending, database optimized for sorting 
+    .sort({ date: -1 }) // most recent descending, database optimized for sorting
     .then(dbTransaction => {
       res.json(dbTransaction);
     })
